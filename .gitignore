@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs
+/LiveApp/.vs/LiveApp/v16
+/LiveApp/obj/Debug/netcoreapp3.1
+/LiveApp/obj
+/LiveApp/.vs/LiveApp/config
+/LiveApp/bin/Debug/netcoreapp3.1
