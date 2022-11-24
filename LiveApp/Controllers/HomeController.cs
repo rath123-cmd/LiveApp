@@ -1,15 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LiveApp.Controllers
 {
-    public class HomeController
+    public class HomeController : Controller
     {
-        public string Index()
+        public ViewResult Index()
         {
-            return "Hello from Rathin";
+            return View();
+        }
+
+        public ViewResult AboutUs()
+        {
+            return View();
         }
     }
 }

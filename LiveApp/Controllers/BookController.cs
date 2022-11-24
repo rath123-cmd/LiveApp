@@ -16,19 +16,22 @@ namespace LiveApp.Controllers
             _bookRepository = new BookRepository();
         }
 
-        public List<BookModel> GetAllBooks()
+        public ViewResult GetAllBooks()
         {
-            return _bookRepository.GetAllBooks();
+            var list = _bookRepository.GetAllBooks();
+            return View();
         }
 
-        public BookModel GetBookById(int id)
+        public ViewResult GetBookById(int id)
         {
-            return _bookRepository.GetBookById(id);
+            var book = _bookRepository.GetBookById(id);
+            return View();
         }
 
-        public List<BookModel> SearchBook(string authorName)
+        public ViewResult SearchBook(string authorName)
         {
-            return _bookRepository.SearchBook(authorName);
+            //var list = _bookRepository.SearchBook(authorName);
+            return View();
         }
     }
 }
