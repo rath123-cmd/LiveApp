@@ -1,5 +1,4 @@
 ﻿body {
-    background-color red;
 }
 
 .logo{
@@ -11,3 +10,20 @@
     height: 200px;
     width: 200px;
 }
+
+.jumbotron{
+    background-color: none;
+}
+
+.body{
+    margin-bottom: 40px;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 40px;
+}
+
