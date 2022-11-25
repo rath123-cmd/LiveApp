@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +28,16 @@ namespace LiveApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // This is to tell the system to use the static files in the wwwroot folder.
+            app.UseStaticFiles();
+
+            // This is to tell the system to use other static file in a particular folder directory.
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
+                RequestPath = "/MyStaticFiles"
+            });
 
             app.UseRouting();
 
