@@ -19,7 +19,7 @@ namespace LiveApp.Controllers
         public ViewResult GetAllBooks()
         {
             var list = _bookRepository.GetAllBooks();
-            return View();
+            return View(list);
         }
 
         public ViewResult GetBookById(int id)

@@ -20,10 +20,18 @@
 }
 
 .footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 40px;
+}
+
+.bookContainer {
+    height: 100%;
+    margin: 0em;
+    overflow-y: auto;
+    display: inline-block;
+    list-style-type: none;
 }
 
