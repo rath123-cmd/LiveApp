@@ -24,8 +24,7 @@ namespace LiveApp.Controllers
 
         public ViewResult GetBookById(int id)
         {
-            var book = _bookRepository.GetBookById(id);
-            return View();
+            return View(_bookRepository.GetBookById(id));
         }
 
         public ViewResult SearchBook(string authorName)

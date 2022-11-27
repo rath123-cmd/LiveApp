@@ -1,32 +1,28 @@
 ﻿@model IEnumerable<LiveApp.Models.BookModel>
 
-@{
-    Layout = "_Layout";
-}
-<div class="py-5 bg-light">
-    <div class="container">
+<div class="container">
+    <div class="py-5 bg-light">
         <h3 class="h3">Top Books.</h3>
         <div class="row">
             @foreach (var book in Model)
             {
                 <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" xmlns="http://www.w3.org/2000/svg"></svg>
-                        <div class="card-title">@book.Name</div>
+                    <div class="card g-md-4 shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"></svg>
                         <div class="card-body">
-                            <p class="card-text">
-                                This is the body of the class.
-                            </p>
+                            <h3 class="card-title">@book.Name</h3>
+                            <p class="card-text">@book.Description</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn-outline-secondary">Click Me</a>
+                                    <a href="/book/GetBookById/@book.Id" class="btn btn-sm btn-outline-secondary">View Details</a>
                                 </div>
                             </div>
                             <small class="text-muted">@book.Author</small>
                         </div>
                     </div>
                 </div>
-             }
+            }
         </div>
     </div>
 </div>
+
