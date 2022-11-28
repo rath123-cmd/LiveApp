@@ -13,11 +13,13 @@ namespace LiveApp.Controllers
         [ViewData]
         public string Title { get; set; }
         public BookRepository _bookRepository { get; set; }
+
         public BookController()
         {
             _bookRepository = new BookRepository();
         }
 
+        [Route("~/Books")]
         public ViewResult GetAllBooks()
         {
             Title = "All Books";
@@ -25,6 +27,7 @@ namespace LiveApp.Controllers
             return View(list);
         }
 
+        [Route("~/Books/{id:int}")]
         public ViewResult GetBookById(int id)
         {
             Title =_bookRepository.GetBookById(id).Name + " Book Details";
@@ -32,12 +35,14 @@ namespace LiveApp.Controllers
             return View(_bookRepository.GetBookById(id));
         }
 
+        [Route("~/Books/{authorName}")]
         public ViewResult SearchBook(string authorName)
         {
             //var list = _bookRepository.SearchBook(authorName);
             return View();
         }
 
+        [Route("~/Books/AddBook")]
         public ViewResult AddNewBook()
         {
             return View();
