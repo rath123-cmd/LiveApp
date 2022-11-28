@@ -1,4 +1,4 @@
-﻿@using LiveApp.Models;
+﻿
 @model BookModel
 
 
@@ -36,19 +36,19 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="h1">@Model.Name</h1>
+                    <h1 class="h1">@ViewBag.Book.Name</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 text-primary">
                     <span class="form-label">By : </span>
-                    <span class="font-monospace">@Model.Author</span>
+                    <span class="font-monospace">@ViewBag.Book.Author</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <p class="description">
-                        @Model.Description
+                        @ViewBag.Book.Description
                     </p>
                 </div>
             </div>
@@ -60,9 +60,9 @@
             <hr />
             <div class="container">
                 <ul class="list-group">
-                    <li class="list-group-item"><span class="fw-bold">Category - </span>@Model.Category</li>
-                    <li class="list-group-item"><span class="fw-bold">Total pages - </span>@Model.TotalPages</li>
-                    <li class="list-group-item"><span class="fw-bold">Language - </span>@Model.Language</li>
+                    <li class="list-group-item"><span class="fw-bold">Category - </span>@ViewBag.Book.Category</li>
+                    <li class="list-group-item"><span class="fw-bold">Total pages - </span>@ViewBag.Book.TotalPages</li>
+                    <li class="list-group-item"><span class="fw-bold">Language - </span>@ViewBag.Book.Language</li>
                 </ul>
             </div>
         </div>
@@ -73,22 +73,9 @@
     <div class="py-5 bg-light">
         <h4 class="h4">Similar Books</h4>
         <div class="row">
-            @for(int i = 0; i < 3; i++)
+            @for (int i = 0; i < 3; i++)
             {
-                <div class="col-md-3">
-                    <div class="card g-md-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"></svg>
-                        <div class="card-body">
-                            <h3 class="card-title">Book.Name</h3>
-                            <p class="card-text">Book.Description</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <partial name="_bookThumbnail" model="new BookModel()"/>
             }
         </div>
     </div>
