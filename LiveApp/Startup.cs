@@ -19,7 +19,7 @@ namespace LiveApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-//This is to set the method to run only on the development and debug environment.
+            //This is to set the method to run only on the development and debug environment.
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif

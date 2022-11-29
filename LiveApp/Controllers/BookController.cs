@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace LiveApp.Controllers
 {
+    [Route("books")]
     public class BookController : Controller
     {
         [ViewData]
@@ -19,7 +20,7 @@ namespace LiveApp.Controllers
             _bookRepository = new BookRepository();
         }
 
-        [Route("~/Books")]
+        [Route("")]
         public ViewResult GetAllBooks()
         {
             Title = "All Books";
@@ -27,22 +28,22 @@ namespace LiveApp.Controllers
             return View(list);
         }
 
-        [Route("~/Books/{id:int}")]
+        [Route("{id:int}")]
         public ViewResult GetBookById(int id)
         {
             Title =_bookRepository.GetBookById(id).Name + " Book Details";
-            ViewBag.Book = _bookRepository.GetBookById(id);
+            //ViewBag.Book = _bookRepository.GetBookById(id);
             return View(_bookRepository.GetBookById(id));
         }
 
-        [Route("~/Books/{authorName}")]
+        [Route("{authorName}")]
         public ViewResult SearchBook(string authorName)
         {
             //var list = _bookRepository.SearchBook(authorName);
             return View();
         }
 
-        [Route("~/Books/AddBook")]
+        [Route("add-book")]
         public ViewResult AddNewBook()
         {
             return View();
@@ -52,6 +53,15 @@ namespace LiveApp.Controllers
         public ViewResult AddNewBook(BookModel bookModel)
         {
             return View();
+        }
+
+        [Route("similarbooks")]
+        [System.Web.Mvc.ChildActionOnly]
+        public PartialViewResult GetSimilarBooks()
+        {
+            Title = "Similar Books";
+            var allBooks = _bookRepository.GetAllBooks();
+            return PartialView("GetSimilarBooks", allBooks);
         }
     }
 }

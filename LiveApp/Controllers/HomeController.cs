@@ -1,4 +1,5 @@
 ﻿using LiveApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web;
 
 namespace LiveApp.Controllers
 {
+
     public class HomeController : Controller
     {
         [ViewData]
@@ -20,7 +22,7 @@ namespace LiveApp.Controllers
         }
 
         [CustomActionFilter]
-        [Route("AboutUs")]
+        [Route("about-us")]
         public ViewResult AboutUs()
         {
             Title = "About Us";
@@ -28,7 +30,7 @@ namespace LiveApp.Controllers
         }
 
         [CustomActionFilter]
-        [Route("ContactUs")]
+        [Route("contact-us")]
         public ViewResult ContactUs()
         {
             Title = "Contact Us";

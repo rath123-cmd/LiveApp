@@ -8,3 +8,4 @@
 /LiveApp/obj
 /LiveApp/.vs/LiveApp/config
 /LiveApp/bin/Debug/netcoreapp3.1
+/LiveApp/Views/Book/_GetSimilarBooks.cshtml
