@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <Folder Include="MyStaticFiles\" />
+    <Folder Include="wwwroot\Book\CoverPhotos\" />
+    <Folder Include="wwwroot\Book\Gallery\" />
+    <Folder Include="wwwroot\Book\Pdf\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

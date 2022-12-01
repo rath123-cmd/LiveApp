@@ -26,7 +26,10 @@ namespace LiveApp
             services.AddControllersWithViews();
             //This is to set the method to run only on the development and debug environment.
 #if DEBUG
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option => 
+            {
+                option.HtmlHelperOptions.ClientValidationEnabled = true;
+            });
 #endif
             services.AddScoped<BookRepository, BookRepository>();
             services.AddScoped<LanguageRepository, LanguageRepository>();
@@ -54,7 +57,8 @@ namespace LiveApp
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
+                //endpoints.MapDefaultControllerRoute();
             });
         }
     }

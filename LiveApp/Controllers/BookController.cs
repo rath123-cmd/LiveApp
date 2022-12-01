@@ -1,25 +1,33 @@
 ﻿using LiveApp.Models;
 using LiveApp.Repository;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LiveApp.Controllers
 {
+    [Route("[action]")]
     public class BookController : Controller
     {
         [ViewData]
         public string Title { get; set; }
         private BookRepository _bookRepository { get; set; }
         private LanguageRepository _languageRepository { get; set; }
+        private readonly IWebHostEnvironment _webHostEnvironment = null;
 
-        public BookController(BookRepository bookRepository, LanguageRepository languageRepository)
+        public BookController(BookRepository bookRepository, 
+            LanguageRepository languageRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
             _languageRepository = languageRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<ViewResult> GetAllBooks()
@@ -29,7 +37,7 @@ namespace LiveApp.Controllers
             return View(list);
         }
 
-        [Route("book-details/{id:int:min(1)}", Name = "bookDetailsRoute")]
+        [Route("{id:int:min(1)}")]
         public async Task<ViewResult> GetBookById(int id)
         {
             Title ="Book Details";
@@ -59,9 +67,35 @@ namespace LiveApp.Controllers
         public async Task<IActionResult> AddNewBook(BookModel bookModel)
         {
             Title = "Add New Book";
-            int id = await _bookRepository.AddNewBook(bookModel);
+            
             if (ModelState.IsValid)
             {
+                if(bookModel.CoverPhoto != null)
+                {
+                    string folder = "Book/CoverPhotos/";
+                    bookModel.CoverPhotoUrl = await UploadFile(folder, bookModel.CoverPhoto);
+                }
+
+                if (bookModel.GalleryFiles != null)
+                {
+                    string folder = "Book/Gallery/";
+                    bookModel.Gallery = new List<GalleryModel>();
+                    foreach (var file in bookModel.GalleryFiles)
+                    {
+                        bookModel.Gallery.Add(new GalleryModel() { 
+                            Name = file.FileName,
+                            Url = await UploadFile(folder, file)
+                        });
+                    }
+                }
+
+                if (bookModel.BookPdf != null)
+                {
+                    string folder = "Book/Pdf/";
+                    bookModel.BookPdfUrl = await UploadFile(folder, bookModel.BookPdf);
+                }
+
+                int id = await _bookRepository.AddNewBook(bookModel);
                 if (id > 0)
                 {
                     return RedirectToAction(nameof(AddNewBook), new { isSuccess = true, bookId = id });
@@ -71,6 +105,16 @@ namespace LiveApp.Controllers
             ViewBag.Languages = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
 
             return View();
+        }
+
+        private async Task<string> UploadFile(string folderPath, IFormFile file)
+        {
+            folderPath += Guid.NewGuid().ToString() + file.FileName;
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return "/" + folderPath;
         }
 
         [Route("similarbooks")]

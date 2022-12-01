@@ -9,12 +9,12 @@ using System.Web;
 
 namespace LiveApp.Controllers
 {
-
+    [Route("[action]")]
     public class HomeController : Controller
     {
         [ViewData]
         public string Title { get; set; }
-
+        [Route("~/")]
         public ViewResult Index()
         {
             Title = "Home";
@@ -22,7 +22,6 @@ namespace LiveApp.Controllers
         }
 
         [CustomActionFilter]
-        [Route("about-us")]
         public ViewResult AboutUs()
         {
             Title = "About Us";
@@ -30,14 +29,12 @@ namespace LiveApp.Controllers
         }
 
         [CustomActionFilter]
-        [Route("contact-us")]
         public ViewResult ContactUs()
         {
             Title = "Contact Us";
             return View();
         }
 
-        [Route("login")]
         public ActionResult Login()
         {
             return View();

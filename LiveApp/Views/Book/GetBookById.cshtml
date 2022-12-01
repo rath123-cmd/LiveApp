@@ -8,20 +8,18 @@
         <div class="col-md-6">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    @for (int i = 0; i < Model.Gallery.Count(); i++)
+                    {
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "")" aria-label="Slide @i"></button>
+                    }
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="~/images/book/book1.jpg" class="d-block w-100" alt="bookpic1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/images/book/book2.jpg" class="d-block w-100" alt="bookpic1">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="~/images/book/book3.jpg" class="d-block w-100" alt="bookpic1">
-                    </div>
+                    @for (int i = 0; i < Model.Gallery.Count(); i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="@Model.Gallery[i].Url" class="d-block w-100" alt="bookpic1">
+                        </div>
+                    }
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -54,7 +52,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <button class="btn btn-outline-primary">Read Me</button>
+                    <a href="@Model.BookPdfUrl" class="btn btn-outline-primary" target="_blank">Read Me</a>
                 </div>
             </div>
             <hr />
@@ -75,7 +73,8 @@
         <div class="row">
             @*@Html.ActionLink("Similar Books", "GetSimilarBooks")*@
             <p>
-                <a asp-controller="Book" asp-action="GetSimilarBooks" class="btn btn-primary m-2">Similar Books</a>
+                @*<a asp-controller="Book" asp-action="GetSimilarBooks" class="btn btn-primary m-2">Similar Books</a>*@
+                <vc:similar-books language-id="@Model.LanguageId" book-id ="@Model.Id"></vc:similar-books>
             </p>
         </div>
     </div>
