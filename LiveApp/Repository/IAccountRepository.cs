@@ -8,5 +8,7 @@ namespace LiveApp.Repository
     {
         Task<IdentityResult> CreateUserAsync(SignUpUserModel signUpUserModel);
         Task<SignInResult> PasswordSignInAsync(LogInModel logInModel);
+        Task LogOutAsync();
+        Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
     }
 }

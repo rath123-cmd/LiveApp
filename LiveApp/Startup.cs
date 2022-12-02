@@ -1,6 +1,8 @@
 using LiveApp.Data;
+using LiveApp.Helpers;
 using LiveApp.Models;
 using LiveApp.Repository;
+using LiveApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +47,11 @@ namespace LiveApp
             //    option.Password.RequireDigit = false;
             //});
 
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/login";
+            });
+
             services.AddControllersWithViews();
             //This is to set the method to run only on the development and debug environment.
 #if DEBUG
@@ -56,6 +63,9 @@ namespace LiveApp
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserServices, UserServices>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +89,7 @@ namespace LiveApp
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

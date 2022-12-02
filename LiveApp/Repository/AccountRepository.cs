@@ -1,4 +1,5 @@
 ﻿using LiveApp.Models;
+using LiveApp.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,19 @@ namespace LiveApp.Repository
 {
     public class AccountRepository : IAccountRepository
     {
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public UserManager<ApplicationUser> _userManager { get; }
+        private readonly IUserServices _userServices;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        
+
+        public AccountRepository(UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager,
+            IUserServices userServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userServices = userServices;
         }
 
 
@@ -42,6 +49,18 @@ namespace LiveApp.Repository
                     logInModel.RememberMe, 
                     false
                 );
+        }
+
+        public async Task LogOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
+        {
+            var userId = _userServices.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
     }
 }

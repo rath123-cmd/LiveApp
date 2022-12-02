@@ -1,5 +1,6 @@
 ﻿using LiveApp.Models;
 using LiveApp.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +53,7 @@ namespace LiveApp.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<ViewResult> AddNewBook(bool isSuccess = false, int bookId = 0)
         {
             Title = "Add New Book";
