@@ -17,12 +17,12 @@ namespace LiveApp.Controllers
     {
         [ViewData]
         public string Title { get; set; }
-        private BookRepository _bookRepository { get; set; }
-        private LanguageRepository _languageRepository { get; set; }
+        private IBookRepository _bookRepository { get; set; }
+        private ILanguageRepository _languageRepository { get; set; }
         private readonly IWebHostEnvironment _webHostEnvironment = null;
 
-        public BookController(BookRepository bookRepository, 
-            LanguageRepository languageRepository,
+        public BookController(IBookRepository bookRepository, 
+            ILanguageRepository languageRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;

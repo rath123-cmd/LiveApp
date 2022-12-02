@@ -1,9 +1,12 @@
-﻿<header>
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+
+
+<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow md-3">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="~/images/home1.jpg" height="30" width="30" />
-                Book Store
+                @_configuration["AppName"]
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collaspe" aria-controls="navbar" aria-expanded="false" aria-label="Toggle Navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -11,8 +14,8 @@
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Login">Login</a>
-                        <a class="btn btn-primary" href="#">Register</a>
+                        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="LogIn">Login</a>
+                        <a class="btn btn-primary" asp-controller="Account" asp-action="SignUp">Register</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav flex-grow-1">

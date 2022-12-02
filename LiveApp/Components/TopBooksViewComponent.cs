@@ -9,8 +9,8 @@ namespace LiveApp.Components
 {
     public class TopBooksViewComponent : ViewComponent
     {
-        public BookRepository _bookRepository { get; }
-        public TopBooksViewComponent(BookRepository bookRepository)
+        public IBookRepository _bookRepository { get; }
+        public TopBooksViewComponent(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }

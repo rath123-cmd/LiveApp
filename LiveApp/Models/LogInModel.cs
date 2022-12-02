@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace LiveApp.Models
 {
-    public class SignInModel
+    public class LogInModel
     {
-        [Required, EmailAddress]
+        [Required(ErrorMessage = "This us required to login.")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address.")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "This us required to login.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Display(Name = "Rememeber Me")]
+        [Display(Name = "Remember Me ")]
         public bool RememberMe { get; set; }
     }
 }

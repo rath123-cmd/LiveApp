@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LiveApp.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context = null;
 
@@ -16,10 +16,10 @@ namespace LiveApp.Repository
         {
             _context = context;
         }
-       
+
         public async Task<int> AddNewBook(BookModel book)
         {
-            var newBook = new Books() 
+            var newBook = new Books()
             {
                 Author = book.Author,
                 CreatedOn = DateTime.UtcNow,
@@ -112,8 +112,8 @@ namespace LiveApp.Repository
                     Name = book.Name,
                     TotalPages = book.TotalPages,
                     CoverPhotoUrl = book.CoverPhotoUrl,
-                    Gallery = book.BookGallery.Select(g => new GalleryModel() 
-                    { 
+                    Gallery = book.BookGallery.Select(g => new GalleryModel()
+                    {
                         Id = g.Id,
                         Name = g.Name,
                         Url = g.Url
@@ -127,6 +127,6 @@ namespace LiveApp.Repository
             return null;
         }
 
-        
+
     }
 }

@@ -1,9 +1,12 @@
 using LiveApp.Data;
+using LiveApp.Models;
 using LiveApp.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -17,12 +20,31 @@ namespace LiveApp
 {
     public class Startup
     {
+        private IConfiguration _configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookStoreContext>(
-                option => option.UseSqlServer("Server = IN-HNH9WP3; Database = BookStore; Integrated Security = True;"));
+                option => option.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
+
+            //services.Configure<IdentityOptions>(option =>
+            //{
+            //    option.Password.RequiredLength = 3;
+            //    option.Password.RequireNonAlphanumeric = false;
+            //    option.Password.RequireUppercase = false;
+            //    option.Password.RequireLowercase = false;
+            //    option.Password.RequiredUniqueChars = 0;
+            //    option.Password.RequireDigit = false;
+            //});
+
             services.AddControllersWithViews();
             //This is to set the method to run only on the development and debug environment.
 #if DEBUG
@@ -31,8 +53,9 @@ namespace LiveApp
                 option.HtmlHelperOptions.ClientValidationEnabled = true;
             });
 #endif
-            services.AddScoped<BookRepository, BookRepository>();
-            services.AddScoped<LanguageRepository, LanguageRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +77,8 @@ namespace LiveApp
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

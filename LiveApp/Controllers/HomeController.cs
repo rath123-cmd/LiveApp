@@ -34,10 +34,5 @@ namespace LiveApp.Controllers
             Title = "Contact Us";
             return View();
         }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
     }
 }

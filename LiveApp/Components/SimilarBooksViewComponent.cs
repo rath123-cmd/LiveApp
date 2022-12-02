@@ -9,8 +9,8 @@ namespace LiveApp.Components
 {
     public class SimilarBooksViewComponent : ViewComponent
     {
-        public BookRepository _bookRepository { get; }
-        public SimilarBooksViewComponent(BookRepository bookRepository)
+        public IBookRepository _bookRepository { get; }
+        public SimilarBooksViewComponent(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }
